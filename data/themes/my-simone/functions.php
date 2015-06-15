@@ -43,6 +43,7 @@ function my_simone_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(
 		'primary' => esc_html__( 'Primary Menu', 'my-simone' ),
+                'social' => esc_html__('Social Menu', 'my-simone'),
 	) );
 
 	/*
@@ -63,17 +64,13 @@ function my_simone_setup() {
 	 */
 	add_theme_support( 'post-formats', array(
 		'aside',
-		'image',
-		'video',
-		'quote',
-		'link',
 	) );
 
-	// Set up the WordPress core custom background feature.
-	add_theme_support( 'custom-background', apply_filters( 'my_simone_custom_background_args', array(
-		'default-color' => 'ffffff',
-		'default-image' => '',
-	) ) );
+	// Set up the WordPress core custom background feature. Background menu link in Appearance
+//	add_theme_support( 'custom-background', apply_filters( 'my_simone_custom_background_args', array(
+//		'default-color' => 'ffffff',
+//		'default-image' => '',
+//	) ) );
 }
 endif; // my_simone_setup
 add_action( 'after_setup_theme', 'my_simone_setup' );
@@ -86,7 +83,7 @@ add_action( 'after_setup_theme', 'my_simone_setup' );
  * @global int $content_width
  */
 function my_simone_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'my_simone_content_width', 640 );
+	$GLOBALS['content_width'] = apply_filters( 'my_simone_content_width', 600 );
 }
 add_action( 'after_setup_theme', 'my_simone_content_width', 0 );
 
@@ -113,7 +110,17 @@ add_action( 'widgets_init', 'my_simone_widgets_init' );
  */
 function my_simone_scripts() {
 	wp_enqueue_style( 'my-simone-style', get_stylesheet_uri() );
-
+        
+        wp_enqueue_style('my-simone-content-sidebar', get_template_directory_uri() . '/layouts/content-sidebar.css');
+        
+        wp_enqueue_style('my-simone-google-fonts', 'http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic|PT+Sans:400,700,400italic,700italic');
+        
+        wp_enqueue_script( 'my-simone-superfish', get_template_directory_uri() . '/js/superfish.min.js', array('jquery'), '20140328', true );
+        
+        wp_enqueue_script( 'my-simone-superfish-settings', get_template_directory_uri() . '/js/superfish-settings.js', array('my-simone-superfish'), '20140328', true );
+        
+        wp_enqueue_style('my-simone-fontawesome', 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
+        
 	wp_enqueue_script( 'my-simone-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20120206', true );
 
 	wp_enqueue_script( 'my-simone-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20130115', true );
